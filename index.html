@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>한국 FM 라디오</title>
+<meta name="theme-color" content="#0e1117">
+<meta name="apple-mobile-web-app-title" content="FM 라디오">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAE2ElEQVR42u3dQVLrOhBGYVvFGOqO2AF7ZAXskR0womAD3BFDIHEsqbv1nfF9saU++V9Lkc2+BeD+3+PXhvR8vr/ts+9hJzAqCb6TGJXk3kmMSnLvREYlsRuZUWkzYCcyKqV1IzMqpfVOZFRK60ZmVErrRmZUkrqRGZWkbmRGJakbmVFJ6kZmVJK6kRmVpG6mCZVo0hmVUrqRGZWk1nKgfsshnZE1pRuZUUlqLQfqthzSGdlTWkKj/qIQSC+0dgMV2g4JDS0HEFpo7QaqtB0SGloOgNDAAHb9MyQ0QGigP3em4Bw+np9u+u8fXl5Noh46n7hEJ/RSAhOc0OUlJjehy0pMbkKXFpnYhC4pMrEXFbq6yKuLvYzQvUW+VZzo90fowiKPkiPzvRM6sBBRJKg2HkIPLHz0oq8wRkJv652pcIaksNBHi1ulqKuPv4zQCmk+vmmKV4+jY6uwR586oY8UYLUfGlabo7RCX1uo1c84rDJfKYWOWpzo7c8KUqcTOkpRsv5UXV3qVEJfU4wehZi1aJo9lkxSpxF6VgEqP4JVUeoUQs+Y+OhbWDPGmUHq8EKPnvBse7Gjxxxd6tBCj5zo1Z8prCJ1iTcnrS7zGWOosk8fNqEvLdAthYhwgD7aIf4R876c0FlkjrzHvarU4YSOLvPoIs6616xSpxR6xmmy2YWbce89a7HEorDn4uyWcxYRinbLfUSc1/IJ3fN/cRWPUI4aU7bWI9W23QiZoyRyj/tc4Wx0CKF79WorHJeMInWU1qPsn6RY6QGACHvfEjrISjpLizF7HFlSuuTfWJm9kJl5/YeX14uu//H85EUzGdJ5hkwRX9HVax6i702HFjqyzBkewZol9UyhW1SZo4ry8fw05N7PuM4ssWb20mF3OSKu3GcUKuK4nIfuXKTercaoVO5x/UvHPKsmyyR0lFYj0p6t154FXhT+VpxrChD1dF7WL+cZcz/zC3QXoSgRxRlxXPPoNaLuIUe4p/Iva8xyOi/S6bnMLcoyPXTPFf8ZAow6PaeHXiidIz3K3/NeKqe0hA4oc4+F8SqkFfqvgveSbmRyzRqDF54HTNceCRf9p+RbxuxFM4u1Glme+l79LxXooZNIsrqohC642s/0bN8s7nynx39hpK0eekpC9z4D0uPzV/+yLJ3QZ58nufYzvv/9Wb80wi7Hj6KN/hn6yPVITOhpi0spOwbbdiA0zk/nsz+L0AChpXOGzyQ0QGiA0AChAUKD0PidXu93BqEBQkdLVOlMaIDQEVNaOhO6jNRkPg/noTvglQOEXkpsIhMa0EOD0AChAUIDhAYIDUIDhAYIDRAaIDQIDRAaIDRAaIDQIDRAaIDQAKEBQoPQAKEBQgOEBggNQgOEBggNEBqEBggNEBogNHC50J/vb7tpQAU+3992CQ0tB0BoYJTQ+mhU6J8lNLQcQAqhtR3I3m5IaGg5gDRCazuQud2Q0KjfckhpZE3nHxOa1Mgos5YD9VsOKY2s6fxnQpMamWTWcmCdlkNKI1s6X5zQpEYGma9qOUiN6DJf3UOTGpFlPrQoJDWiynxIaFIjqsyHhSY1Isq8bdt2ipT3/x6/lAEzRb45oaU1osl8WkJLa0QJwxb9BkHmqQktrTEz9IalKblJPOI6U9oDcpO4lNAEJ3Av/gMZ+OsCa+CUCgAAAABJRU5ErkJggg==">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAE2ElEQVR42u3dQVLrOhBGYVvFGOqO2AF7ZAXskR0womAD3BFDIHEsqbv1nfF9saU++V9Lkc2+BeD+3+PXhvR8vr/ts+9hJzAqCb6TGJXk3kmMSnLvREYlsRuZUWkzYCcyKqV1IzMqpfVOZFRK60ZmVErrRmZUkrqRGZWkbmRGJakbmVFJ6kZmVJK6kRmVpG6mCZVo0hmVUrqRGZWk1nKgfsshnZE1pRuZUUlqLQfqthzSGdlTWkKj/qIQSC+0dgMV2g4JDS0HEFpo7QaqtB0SGloOgNDAAHb9MyQ0QGigP3em4Bw+np9u+u8fXl5Noh46n7hEJ/RSAhOc0OUlJjehy0pMbkKXFpnYhC4pMrEXFbq6yKuLvYzQvUW+VZzo90fowiKPkiPzvRM6sBBRJKg2HkIPLHz0oq8wRkJv652pcIaksNBHi1ulqKuPv4zQCmk+vmmKV4+jY6uwR586oY8UYLUfGlabo7RCX1uo1c84rDJfKYWOWpzo7c8KUqcTOkpRsv5UXV3qVEJfU4wehZi1aJo9lkxSpxF6VgEqP4JVUeoUQs+Y+OhbWDPGmUHq8EKPnvBse7Gjxxxd6tBCj5zo1Z8prCJ1iTcnrS7zGWOosk8fNqEvLdAthYhwgD7aIf4R876c0FlkjrzHvarU4YSOLvPoIs6616xSpxR6xmmy2YWbce89a7HEorDn4uyWcxYRinbLfUSc1/IJ3fN/cRWPUI4aU7bWI9W23QiZoyRyj/tc4Wx0CKF79WorHJeMInWU1qPsn6RY6QGACHvfEjrISjpLizF7HFlSuuTfWJm9kJl5/YeX14uu//H85EUzGdJ5hkwRX9HVax6i702HFjqyzBkewZol9UyhW1SZo4ry8fw05N7PuM4ssWb20mF3OSKu3GcUKuK4nIfuXKTercaoVO5x/UvHPKsmyyR0lFYj0p6t154FXhT+VpxrChD1dF7WL+cZcz/zC3QXoSgRxRlxXPPoNaLuIUe4p/Iva8xyOi/S6bnMLcoyPXTPFf8ZAow6PaeHXiidIz3K3/NeKqe0hA4oc4+F8SqkFfqvgveSbmRyzRqDF54HTNceCRf9p+RbxuxFM4u1Glme+l79LxXooZNIsrqohC642s/0bN8s7nynx39hpK0eekpC9z4D0uPzV/+yLJ3QZ58nufYzvv/9Wb80wi7Hj6KN/hn6yPVITOhpi0spOwbbdiA0zk/nsz+L0AChpXOGzyQ0QGiA0AChAUKD0PidXu93BqEBQkdLVOlMaIDQEVNaOhO6jNRkPg/noTvglQOEXkpsIhMa0EOD0AChAUIDhAYIDUIDhAYIDRAaIDQIDRAaIDRAaIDQIDRAaIDQAKEBQoPQAKEBQgOEBggNQgOEBggNEBqEBggNEBogNHC50J/vb7tpQAU+3992CQ0tB0BoYJTQ+mhU6J8lNLQcQAqhtR3I3m5IaGg5gDRCazuQud2Q0KjfckhpZE3nHxOa1Mgos5YD9VsOKY2s6fxnQpMamWTWcmCdlkNKI1s6X5zQpEYGma9qOUiN6DJf3UOTGpFlPrQoJDWiynxIaFIjqsyHhSY1Isq8bdt2ipT3/x6/lAEzRb45oaU1osl8WkJLa0QJwxb9BkHmqQktrTEz9IalKblJPOI6U9oDcpO4lNAEJ3Av/gMZ+OsCa+CUCgAAAABJRU5ErkJggg==">
+<style>
+:root{
+  --bg:#0e1117; --bg2:#161b24; --card:#1b2230; --card2:#222b3b;
+  --line:#2b3546; --fg:#e8edf5; --dim:#8b98ac; --accent:#ff8a3d; --ok:#4ade80; --err:#f87171;
+  --barH: calc(84px + env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;
+  padding-bottom:calc(var(--barH) + 12px);
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  position:sticky; top:0; z-index:20;
+  padding:calc(env(safe-area-inset-top) + 14px) 16px 10px;
+  background:linear-gradient(180deg,var(--bg) 72%,rgba(14,17,23,0));
+}
+h1{margin:0;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+h1 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+.sub{margin:4px 0 0;font-size:12px;color:var(--dim)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  flex:none;border:1px solid var(--line);background:var(--bg2);color:var(--dim);
+  padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;font-family:inherit;
+}
+nav button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#14181f}
+main{padding:8px 12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.st{
+  position:relative;text-align:left;border:1px solid var(--line);background:var(--card);
+  color:var(--fg);border-radius:16px;padding:14px 12px 12px;font-family:inherit;
+  display:flex;flex-direction:column;gap:6px;min-height:96px;
+  transition:transform .12s ease,background .12s ease;
+}
+.st:active{transform:scale(.97);background:var(--card2)}
+.st[data-live="1"]{border-color:var(--accent);background:var(--card2)}
+.st .brand{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--dim)}
+.st .name{font-size:15px;font-weight:700;line-height:1.25;letter-spacing:-.01em}
+.st .freq{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums;margin-top:auto}
+.st .fav{
+  position:absolute;top:8px;right:8px;width:32px;height:32px;border:0;background:transparent;
+  color:var(--line);font-size:17px;line-height:1;padding:0;font-family:inherit;
+}
+.st .fav[aria-pressed="true"]{color:var(--accent)}
+.st.off{opacity:.45}
+.eq{position:absolute;top:14px;right:38px;display:none;gap:2px;align-items:flex-end;height:13px}
+.st[data-live="1"] .eq{display:flex}
+.eq i{width:3px;background:var(--accent);border-radius:1px;animation:b .9s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.15s}.eq i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,100%{height:4px}50%{height:13px}}
+h2.sec{font-size:12px;color:var(--dim);margin:20px 4px 10px;font-weight:700;letter-spacing:.06em}
+.note{font-size:12px;color:var(--dim);line-height:1.6;background:var(--bg2);border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px;margin:14px 2px}
+.note b{color:var(--fg)}
+.player{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  background:rgba(22,27,36,.92);backdrop-filter:saturate(150%) blur(18px);
+  -webkit-backdrop-filter:saturate(150%) blur(18px);
+  border-top:1px solid var(--line);
+  padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;gap:12px;
+}
+.player .meta{flex:1;min-width:0}
+.player .t{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player .s{font-size:11px;color:var(--dim);margin-top:3px;display:flex;align-items:center;gap:5px}
+.player .s .led{width:6px;height:6px;border-radius:50%;background:var(--dim);flex:none}
+.player .s.playing .led{background:var(--ok)}
+.player .s.loading .led{background:var(--accent);animation:p 1s infinite}
+.player .s.error .led{background:var(--err)}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
+.pbtn{
+  width:56px;height:56px;flex:none;border-radius:50%;border:0;background:var(--accent);color:#14181f;
+  font-size:22px;display:grid;place-items:center;font-family:inherit;
+}
+.pbtn:disabled{background:var(--line);color:var(--dim)}
+.pbtn:active{transform:scale(.94)}
+.icb{width:42px;height:42px;flex:none;border-radius:12px;border:1px solid var(--line);background:transparent;
+  color:var(--dim);font-size:15px;font-family:inherit}
+.icb.on{color:var(--accent);border-color:var(--accent)}
+dialog{border:0;background:var(--bg2);color:var(--fg);border-radius:18px;padding:0;width:min(92vw,420px);
+  box-shadow:0 24px 60px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+.dlg{padding:20px}
+.dlg h3{margin:0 0 14px;font-size:16px}
+.dlg label{display:block;font-size:12px;color:var(--dim);margin:12px 0 5px}
+.dlg input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);
+  background:var(--card);color:var(--fg);font-size:15px;font-family:inherit}
+.dlg .row{display:flex;gap:8px;margin-top:18px}
+.dlg button{flex:1;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--card);
+  color:var(--fg);font-size:14px;font-weight:600;font-family:inherit}
+.dlg button.primary{background:var(--accent);border-color:var(--accent);color:#14181f}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chips button{flex:none;padding:9px 14px;border-radius:999px;border:1px solid var(--line);
+  background:var(--card);color:var(--fg);font-size:13px;font-family:inherit}
+.chips button.primary{background:var(--accent);border-color:var(--accent);color:#14181f}
+footer{padding:22px 16px 8px;font-size:11px;color:var(--dim);line-height:1.7}
+footer a{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="dot"></span>한국 FM 라디오</h1>
+  <p class="sub">아이폰 Safari용 · 공식 스트림 직결</p>
+</header>
+
+<nav id="tabs" role="tablist"></nav>
+
+<main>
+  <div id="list"></div>
+
+  <div class="note" id="mbcNote">
+    <b>MBC 표준FM / FM4U 안내.</b> MBC는 스트림 주소를 발급하는 API가 브라우저의 교차출처(CORS) 요청을
+    허용하지 않아, 서버 없이 순수 웹페이지만으로는 주소를 받아올 수 없습니다.
+    (2026-09-08 확인: <code>sminiplay.imbc.com</code> 응답에 <code>Access-Control-Allow-Origin</code> 헤더 없음.)
+    직접 구한 m3u8 주소가 있다면 아래 <b>＋ 채널 추가</b>로 등록하면 재생됩니다.
+  </div>
+
+  <footer>
+    각 스트림은 방송사가 자사 웹 플레이어에 사용하는 공개 주소를 그대로 사용합니다.
+    개인적·비상업적 청취 용도로만 사용하시고, 재배포·재송출은 각 방송사 이용약관을 확인하세요.
+    표기 주파수는 <b>서울 기준</b>이며 지역에 따라 다릅니다.<br><br>
+    이 페이지는 <b>iOS Safari</b>를 위해 만들어졌습니다. Safari는 HLS(.m3u8)를 브라우저가 직접
+    재생하므로 CORS 제약을 받지 않습니다. 데스크톱 Chrome·Firefox에서는 hls.js로 대체 재생을
+    시도하지만, KBS·SBS CDN이 교차출처 헤더를 주지 않아 일부 채널이 재생되지 않을 수 있습니다.
+  </footer>
+</main>
+
+<div class="player">
+  <button class="icb" id="sleepBtn" title="수면 타이머">⏱</button>
+  <div class="meta">
+    <div class="t" id="pTitle">채널을 선택하세요</div>
+    <div class="s" id="pStat"><span class="led"></span><span id="pStatT">대기 중</span></div>
+  </div>
+  <button class="icb" id="addBtn" title="채널 추가">＋</button>
+  <button class="pbtn" id="playBtn" disabled>▶</button>
+</div>
+
+<!-- crossorigin 속성을 두면 안 됩니다: 붙이는 순간 Safari가 CORS 요청으로 전환하는데
+     KBS·SBS CDN은 Access-Control-Allow-Origin 을 주지 않아 재생이 막힙니다.
+     속성이 없으면 네이티브 미디어 로딩이라 CORS 검사를 받지 않습니다. -->
+<audio id="au" preload="none" playsinline></audio>
+
+<dialog id="addDlg"><form method="dialog" class="dlg">
+  <h3>채널 직접 추가</h3>
+  <label for="aName">채널 이름</label>
+  <input id="aName" placeholder="예: MBC 표준FM" required>
+  <label for="aUrl">스트림 주소 (https:// 로 시작하는 .m3u8 / .aac / .mp3)</label>
+  <input id="aUrl" type="url" placeholder="https://..." required>
+  <label for="aFreq">주파수 표기 (선택)</label>
+  <input id="aFreq" placeholder="예: FM 95.9">
+  <div class="row">
+    <button value="cancel">취소</button>
+    <button value="ok" class="primary" id="aOk">추가</button>
+  </div>
+</form></dialog>
+
+<dialog id="sleepDlg"><form method="dialog" class="dlg">
+  <h3>수면 타이머</h3>
+  <div class="chips" id="sleepChips"></div>
+  <div class="row"><button value="cancel">닫기</button></div>
+</form></dialog>
+
+<script>
+"use strict";
+
+/* ─────────────────────────────────────────────────────────────
+   방송국 정의
+   resolver:
+     'url' → 고정 HTTPS 주소
+     'kbs' → cfpwwwapi.kbs.co.kr 에서 매번 새 서명 URL 발급 (CORS 허용 확인됨)
+     'sbs' → apis.sbs.co.kr play-api 에서 새 서명 URL 발급 (CORS 허용 확인됨)
+   freq: 서울 기준 송출 주파수
+   ───────────────────────────────────────────────────────────── */
+const STATIONS = [
+  // ── 지상파 ──────────────────────────────────────────────
+  {id:'kbs24', g:'terrestrial', brand:'KBS', name:'클래식FM (1FM)', freq:'FM 93.1', r:'kbs', k:'24'},
+  {id:'kbs25', g:'terrestrial', brand:'KBS', name:'쿨FM (2FM)',    freq:'FM 89.1', r:'kbs', k:'25'},
+  {id:'kbs21', g:'terrestrial', brand:'KBS', name:'1라디오',        freq:'FM 97.3', r:'kbs', k:'21'},
+  {id:'kbs22', g:'terrestrial', brand:'KBS', name:'해피FM (2라디오)',freq:'FM 106.1',r:'kbs', k:'22'},
+  {id:'kbs23', g:'terrestrial', brand:'KBS', name:'3라디오',        freq:'FM 104.9', r:'kbs', k:'23'},
+  {id:'kbs26', g:'terrestrial', brand:'KBS', name:'한민족방송',      freq:'AM 972',  r:'kbs', k:'26'},
+
+  {id:'sbs07', g:'terrestrial', brand:'SBS', name:'파워FM',  freq:'FM 107.7', r:'sbs', k:'S07'},
+  {id:'sbs08', g:'terrestrial', brand:'SBS', name:'러브FM',  freq:'FM 103.5', r:'sbs', k:'S08'},
+  {id:'sbs19', g:'terrestrial', brand:'SBS', name:'고릴라디오M', freq:'인터넷·DMB', r:'sbs', k:'S19'},
+
+  {id:'mbc_sfm', g:'terrestrial', brand:'MBC', name:'표준FM', freq:'FM 95.9', r:'blocked'},
+  {id:'mbc_fm4u',g:'terrestrial', brand:'MBC', name:'FM4U',   freq:'FM 91.9', r:'blocked'},
+
+  // ── 그 밖의 전국·수도권 FM ─────────────────────────────
+  {id:'cbs981', g:'etc', brand:'CBS', name:'표준FM', freq:'FM 98.1', r:'url',
+   u:'https://m-aac.cbs.co.kr/mweb_cbs981/_definst_/cbs981.stream/playlist.m3u8'},
+  {id:'cbs939', g:'etc', brand:'CBS', name:'음악FM', freq:'FM 93.9', r:'url',
+   u:'https://m-aac.cbs.co.kr/mweb_cbs939/_definst_/cbs939.stream/playlist.m3u8'},
+  {id:'cbsjoy', g:'etc', brand:'CBS', name:'JOY4U', freq:'인터넷 전용', r:'url',
+   u:'https://m-aac.cbs.co.kr/mweb_cbscmc/_definst_/cbscmc.stream/playlist.m3u8'},
+  {id:'ebsfm',  g:'etc', brand:'EBS', name:'EBS FM', freq:'FM 104.5', r:'url',
+   u:'https://ebsonairiosaod.ebs.co.kr/fmradiobandiaod/bandiappaac/playlist.m3u8'},
+  {id:'gugak',  g:'etc', brand:'국악방송', name:'국악방송 FM', freq:'FM 99.1', r:'url',
+   u:'https://mgugaklive.nowcdn.co.kr/gugakradio/gugakradio.stream/playlist.m3u8'},
+  {id:'ytn',    g:'etc', brand:'YTN', name:'YTN 라디오', freq:'FM 94.5', r:'url',
+   u:'https://radiolive.ytn.co.kr/radio/_definst_/20211118_fmlive/playlist.m3u8'},
+  {id:'tbsfm',  g:'etc', brand:'TBS', name:'TBS FM', freq:'FM 95.1', r:'url',
+   u:'https://cdnfm.tbs.seoul.kr/tbs/_definst_/tbs_fm_web_360.smil/chunklist.m3u8'},
+  {id:'tbsefm', g:'etc', brand:'TBS', name:'TBS eFM', freq:'FM 101.3', r:'url',
+   u:'https://cdnefm.tbs.seoul.kr/tbs/_definst_/tbs_efm_web_360.smil/chunklist.m3u8'}
+];
+
+const ART = "data:image/png;base64,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";
+const SILENT = "data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YSADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+
+const $ = s => document.querySelector(s);
+const au = $('#au');
+const isAppleHls = !!au.canPlayType('application/vnd.apple.mpegurl');
+
+/* ── 저장소 (localStorage 미지원 환경에서도 죽지 않게) ── */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('krfm.'+k); return v==null?d:JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('krfm.'+k, JSON.stringify(v)); }catch(e){} }
+};
+let favs   = store.get('favs', []);
+let custom = store.get('custom', []);
+let tab    = 'terrestrial';
+
+const all = () => STATIONS.concat(custom.map(c => ({...c, g:'custom', r:'url', brand:'직접 추가'})));
+const byId = id => all().find(s => s.id === id);
+
+/* ── 스트림 주소 해석 ──────────────────────────────────── */
+const cache = new Map();          // id → {url, at}
+const TTL = 4 * 60 * 1000;        // 서명 URL 4분 캐시
+
+async function resolve(st, force){
+  if (st.r === 'url') return st.u;
+  if (st.r === 'blocked') throw new Error('이 채널은 브라우저에서 주소를 받아올 수 없습니다');
+  const c = cache.get(st.id);
+  if (!force && c && Date.now() - c.at < TTL) return c.url;
+
+  let url;
+  if (st.r === 'kbs'){
+    const r = await fetch('https://cfpwwwapi.kbs.co.kr/api/v1/landing/live/channel_code/' + st.k, {cache:'no-store'});
+    if (!r.ok) throw new Error('KBS API ' + r.status);
+    const j = await r.json();
+    url = ((j.channel_item || [])[0] || {}).service_url;
+  } else if (st.r === 'sbs'){
+    const r = await fetch('https://apis.sbs.co.kr/play-api/1.0/onair/channel/' + st.k +
+                          '?protocol=hls&ssl=Y&platform=pcweb', {cache:'no-store'});
+    if (!r.ok) throw new Error('SBS API ' + r.status);
+    const j = await r.json();
+    const src = (j.onair || {}).source || {};
+    url = (src.mediasource || {}).mediaurl ||
+          ((src.mediasourcelist || [])[0] || {}).mediaurl;
+  }
+  if (!url) throw new Error('스트림 주소를 찾지 못했습니다');
+  url = url.replace(/^http:/, 'https:');       // 혼합 콘텐츠 차단 방지
+  cache.set(st.id, {url, at: Date.now()});
+  return url;
+}
+
+/* 미리 받아두면 탭했을 때 즉시 재생됨 (iOS 제스처 제약 회피에 유리) */
+function prewarm(){
+  all().filter(s => s.r === 'kbs' || s.r === 'sbs')
+       .forEach(s => resolve(s).catch(()=>{}));
+}
+
+/* ── 재생 엔진 ────────────────────────────────────────── */
+let hls = null, cur = null, retries = 0, unlocked = false;
+
+function unlock(){
+  if (unlocked) return;
+  unlocked = true;
+  au.src = SILENT;
+  const p = au.play();
+  if (p && p.catch) p.catch(()=>{});
+}
+document.addEventListener('touchend', unlock, {once:true, passive:true});
+document.addEventListener('click',    unlock, {once:true});
+
+function setStat(kind, text){
+  const el = $('#pStat');
+  el.className = 's ' + kind;
+  $('#pStatT').textContent = text;
+}
+
+async function attach(url){
+  if (hls){ hls.destroy(); hls = null; }
+  const isHls = /\.m3u8(\?|$)/.test(url);
+  if (isHls && !isAppleHls){
+    // Safari 외 브라우저(데스크톱 확인용): hls.js 로 재생
+    if (!window.Hls) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.17/hls.min.js');
+    hls = new window.Hls({liveDurationInfinity:true});
+    hls.loadSource(url);
+    hls.attachMedia(au);
+  } else {
+    au.src = url;                                  // iOS Safari: 네이티브 HLS
+    au.load();
+  }
+  return au.play();
+}
+
+function loadScript(src){
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = () => rej(new Error('hls.js 로드 실패'));
+    document.head.appendChild(s);
+  });
+}
+
+async function play(st, isRetry){
+  cur = st;
+  if (!isRetry) retries = 0;
+  render();
+  $('#pTitle').textContent = st.brand + ' ' + st.name;
+  setStat('loading', '연결 중…');
+  $('#playBtn').disabled = false;
+  try{
+    const url = await resolve(st, isRetry);
+    await attach(url);
+    setStat('playing', '재생 중');
+    retries = 0;
+    setMedia(st);
+    store.set('last', st.id);
+  }catch(e){
+    if (retries < 3 && st.r !== 'blocked'){
+      retries++;
+      setStat('loading', '재연결 중… (' + retries + '/3)');
+      setTimeout(() => play(st, true), 900 * retries);
+    } else {
+      setStat('error', (e && e.message) ? e.message : '재생할 수 없습니다');
+    }
+  }
+  render();
+}
+
+function stop(){
+  if (hls){ hls.destroy(); hls = null; }
+  au.pause();
+  au.removeAttribute('src');
+  au.load();
+  setStat('', cur ? '정지됨' : '대기 중');
+  render();
+}
+
+function toggle(){
+  if (!cur) return;
+  if (au.paused) play(cur, true); else stop();
+}
+
+/* 라이브 스트림이 끊기면 자동 복구 */
+au.addEventListener('error',   () => { if (cur && !au.paused) play(cur, true); });
+au.addEventListener('stalled', () => { if (cur) setStat('loading', '버퍼링…'); });
+au.addEventListener('waiting', () => { if (cur) setStat('loading', '버퍼링…'); });
+au.addEventListener('playing', () => { if (cur) setStat('playing', '재생 중'); render(); });
+au.addEventListener('pause',   render);
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && cur && au.paused && $('#pStat').classList.contains('error')) play(cur, true);
+});
+
+/* ── 잠금화면 / 제어센터 (Media Session API) ───────────── */
+function setMedia(st){
+  if (!('mediaSession' in navigator)) return;
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: st.name,
+    artist: st.brand,
+    album: st.freq || '한국 FM 라디오',
+    artwork: [{src: ART, sizes:'512x512', type:'image/png'}]
+  });
+  navigator.mediaSession.playbackState = 'playing';
+  const list = visible();
+  const i = list.findIndex(s => s.id === st.id);
+  const go = d => { const n = list[(i + d + list.length) % list.length]; if (n) play(n); };
+  try{
+    navigator.mediaSession.setActionHandler('play',  () => play(st, true));
+    navigator.mediaSession.setActionHandler('pause', stop);
+    navigator.mediaSession.setActionHandler('stop',  stop);
+    navigator.mediaSession.setActionHandler('previoustrack', () => go(-1));
+    navigator.mediaSession.setActionHandler('nexttrack',     () => go(1));
+  }catch(e){}
+}
+
+/* ── 수면 타이머 ──────────────────────────────────────── */
+let sleepAt = 0, sleepTimer = null;
+function setSleep(min){
+  clearTimeout(sleepTimer); sleepAt = 0;
+  $('#sleepBtn').classList.remove('on');
+  if (min > 0){
+    sleepAt = Date.now() + min * 60000;
+    $('#sleepBtn').classList.add('on');
+    sleepTimer = setTimeout(() => { stop(); setSleep(0); setStat('', '수면 타이머 종료'); }, min * 60000);
+  }
+  renderSleep();
+}
+function renderSleep(){
+  const opts = [0, 15, 30, 45, 60, 90, 120];
+  $('#sleepChips').innerHTML = opts.map(m => {
+    const on = (m === 0 && !sleepAt) || (m > 0 && sleepAt && Math.round((sleepAt - Date.now())/60000) === m);
+    return '<button type="submit" value="cancel" data-m="' + m + '"' + (on ? ' class="primary"' : '') + '>' +
+           (m === 0 ? '끄기' : m + '분') + '</button>';
+  }).join('');
+  $('#sleepChips').querySelectorAll('button').forEach(b =>
+    b.onclick = () => setSleep(+b.dataset.m));
+}
+
+/* ── 화면 그리기 ──────────────────────────────────────── */
+const TABS = [
+  {k:'terrestrial', n:'지상파'},
+  {k:'etc',         n:'그 외 FM'},
+  {k:'fav',         n:'★ 즐겨찾기'},
+  {k:'custom',      n:'직접 추가'}
+];
+
+function visible(){
+  if (tab === 'fav') return all().filter(s => favs.includes(s.id));
+  return all().filter(s => s.g === tab);
+}
+
+function render(){
+  $('#tabs').innerHTML = TABS.map(t =>
+    '<button role="tab" data-k="' + t.k + '" aria-selected="' + (tab === t.k) + '">' + t.n + '</button>').join('');
+  $('#tabs').querySelectorAll('button').forEach(b =>
+    b.onclick = () => { tab = b.dataset.k; render(); });
+
+  const list = visible();
+  $('#list').innerHTML = list.length
+    ? '<div class="grid">' + list.map(card).join('') + '</div>'
+    : '<div class="note">' + (tab === 'fav'
+        ? '아직 즐겨찾기가 없습니다. 채널 카드 오른쪽 위 ★ 를 누르면 추가됩니다.'
+        : '＋ 버튼으로 스트림 주소를 직접 등록할 수 있습니다.') + '</div>';
+
+  $('#list').querySelectorAll('.st').forEach(el => {
+    el.onclick = e => {
+      if (e.target.closest('.fav')) return;
+      const st = byId(el.dataset.id);
+      if (!st || st.r === 'blocked'){
+        if (st){ cur = st; $('#pTitle').textContent = st.brand + ' ' + st.name;
+                 setStat('error', '브라우저에서 주소 발급 불가'); }
+        return;
+      }
+      if (cur && cur.id === st.id && !au.paused) stop(); else play(st);
+    };
+  });
+  $('#list').querySelectorAll('.fav').forEach(b =>
+    b.onclick = () => {
+      const id = b.closest('.st').dataset.id;
+      favs = favs.includes(id) ? favs.filter(x => x !== id) : favs.concat(id);
+      store.set('favs', favs); render();
+    });
+
+  $('#mbcNote').style.display = (tab === 'terrestrial') ? '' : 'none';
+  $('#playBtn').textContent = (cur && !au.paused) ? '❚❚' : '▶';
+  $('#playBtn').disabled = !cur || cur.r === 'blocked';
+}
+
+function card(s){
+  const live = cur && cur.id === s.id && !au.paused;
+  return '<button class="st' + (s.r === 'blocked' ? ' off' : '') + '" data-id="' + s.id + '" data-live="' + (live ? 1 : 0) + '">' +
+    '<span class="eq"><i></i><i></i><i></i></span>' +
+    '<button class="fav" aria-pressed="' + favs.includes(s.id) + '">★</button>' +
+    '<span class="brand">' + esc(s.brand) + '</span>' +
+    '<span class="name">' + esc(s.name) + '</span>' +
+    '<span class="freq">' + esc(s.freq || '') + '</span>' +
+  '</button>';
+}
+const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ── 대화상자 ─────────────────────────────────────────── */
+$('#addBtn').onclick = () => $('#addDlg').showModal();
+$('#addDlg').addEventListener('close', () => {
+  if ($('#addDlg').returnValue !== 'ok') return;
+  const name = $('#aName').value.trim(), url = $('#aUrl').value.trim();
+  if (!name || !/^https:\/\//i.test(url)){
+    setStat('error', 'https:// 로 시작하는 주소만 사용할 수 있습니다'); return;
+  }
+  custom = custom.concat([{id:'c' + Date.now(), name, u:url, freq:$('#aFreq').value.trim()}]);
+  store.set('custom', custom);
+  $('#aName').value = $('#aUrl').value = $('#aFreq').value = '';
+  tab = 'custom'; render();
+});
+$('#sleepBtn').onclick = () => { renderSleep(); $('#sleepDlg').showModal(); };
+$('#playBtn').onclick  = toggle;
+
+/* ── 시작 ─────────────────────────────────────────────── */
+render();
+prewarm();
+setInterval(prewarm, TTL - 30000);
+const last = store.get('last', null);
+if (last && byId(last)){
+  cur = byId(last);
+  $('#pTitle').textContent = cur.brand + ' ' + cur.name;
+  setStat('', '탭하여 재생');
+  render();
+}
+</script>
+</body>
+</html>
