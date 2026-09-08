@@ -123,10 +123,12 @@ footer a{color:var(--dim)}
   <div id="list"></div>
 
   <div class="note" id="mbcNote">
-    <b>MBC 표준FM / FM4U 안내.</b> MBC는 스트림 주소를 발급하는 API가 브라우저의 교차출처(CORS) 요청을
-    허용하지 않아, 서버 없이 순수 웹페이지만으로는 주소를 받아올 수 없습니다.
-    (2026-09-08 확인: <code>sminiplay.imbc.com</code> 응답에 <code>Access-Control-Allow-Origin</code> 헤더 없음.)
-    직접 구한 m3u8 주소가 있다면 아래 <b>＋ 채널 추가</b>로 등록하면 재생됩니다.
+    <b>MBC 채널이 오류를 낸다면</b> <code>mbc.json</code> 이 아직 없는 것입니다.
+    MBC는 주소 발급 서버(<code>sminiplay.imbc.com</code>)가 교차출처(CORS) 요청을 막아 브라우저가 직접
+    호출하지 못하므로, GitHub Actions가 대신 주소를 받아 이 페이지 옆에 <code>mbc.json</code> 으로
+    적어 두는 구조입니다. 워크플로를 아직 넣지 않으셨다면 <code>.github/workflows/mbc-token.yml</code> 을
+    추가하고 Actions 탭에서 한 번 수동 실행해 주세요. KBS·SBS는 방송사 API가 CORS를 허용해
+    이 과정 없이 바로 재생됩니다.
   </div>
 
   <footer>
@@ -198,8 +200,9 @@ const STATIONS = [
   {id:'sbs08', g:'terrestrial', brand:'SBS', name:'러브FM',  freq:'FM 103.5', r:'sbs', k:'S08'},
   {id:'sbs19', g:'terrestrial', brand:'SBS', name:'고릴라디오M', freq:'인터넷·DMB', r:'sbs', k:'S19'},
 
-  {id:'mbc_sfm', g:'terrestrial', brand:'MBC', name:'표준FM', freq:'FM 95.9', r:'blocked'},
-  {id:'mbc_fm4u',g:'terrestrial', brand:'MBC', name:'FM4U',   freq:'FM 91.9', r:'blocked'},
+  {id:'mbc_sfm', g:'terrestrial', brand:'MBC', name:'표준FM',  freq:'FM 95.9', r:'mbc', k:'sfm'},
+  {id:'mbc_mfm', g:'terrestrial', brand:'MBC', name:'FM4U',    freq:'FM 91.9', r:'mbc', k:'mfm'},
+  {id:'mbc_chm', g:'terrestrial', brand:'MBC', name:'올댓뮤직', freq:'인터넷 전용', r:'mbc', k:'chm'},
 
   // ── 그 밖의 전국·수도권 FM ─────────────────────────────
   {id:'cbs981', g:'etc', brand:'CBS', name:'표준FM', freq:'FM 98.1', r:'url',
@@ -243,13 +246,27 @@ const byId = id => all().find(s => s.id === id);
 const cache = new Map();          // id → {url, at}
 const TTL = 4 * 60 * 1000;        // 서명 URL 4분 캐시
 
+/* MBC 전용: 같은 출처의 mbc.json (GitHub Actions가 주기적으로 갱신) */
+let mbcJson = null, mbcAt = 0;
+async function mbcTable(force){
+  if (!force && mbcJson && Date.now() - mbcAt < TTL) return mbcJson;
+  const r = await fetch('mbc.json?t=' + Date.now(), {cache:'no-store'});
+  if (!r.ok) throw new Error('mbc.json 없음 — GitHub Actions 설정이 필요합니다');
+  mbcJson = await r.json(); mbcAt = Date.now();
+  return mbcJson;
+}
+
 async function resolve(st, force){
   if (st.r === 'url') return st.u;
-  if (st.r === 'blocked') throw new Error('이 채널은 브라우저에서 주소를 받아올 수 없습니다');
   const c = cache.get(st.id);
   if (!force && c && Date.now() - c.at < TTL) return c.url;
 
   let url;
+  if (st.r === 'mbc'){
+    const t = await mbcTable(force);
+    url = (t.channels || {})[st.k];
+    if (!url) throw new Error('mbc.json 에 ' + st.k + ' 채널이 없습니다');
+  } else
   if (st.r === 'kbs'){
     const r = await fetch('https://cfpwwwapi.kbs.co.kr/api/v1/landing/live/channel_code/' + st.k, {cache:'no-store'});
     if (!r.ok) throw new Error('KBS API ' + r.status);
@@ -272,7 +289,7 @@ async function resolve(st, force){
 
 /* 미리 받아두면 탭했을 때 즉시 재생됨 (iOS 제스처 제약 회피에 유리) */
 function prewarm(){
-  all().filter(s => s.r === 'kbs' || s.r === 'sbs')
+  all().filter(s => s.r === 'kbs' || s.r === 'sbs' || s.r === 'mbc')
        .forEach(s => resolve(s).catch(()=>{}));
 }
 
@@ -444,11 +461,7 @@ function render(){
     el.onclick = e => {
       if (e.target.closest('.fav')) return;
       const st = byId(el.dataset.id);
-      if (!st || st.r === 'blocked'){
-        if (st){ cur = st; $('#pTitle').textContent = st.brand + ' ' + st.name;
-                 setStat('error', '브라우저에서 주소 발급 불가'); }
-        return;
-      }
+      if (!st) return;
       if (cur && cur.id === st.id && !au.paused) stop(); else play(st);
     };
   });
@@ -461,12 +474,12 @@ function render(){
 
   $('#mbcNote').style.display = (tab === 'terrestrial') ? '' : 'none';
   $('#playBtn').textContent = (cur && !au.paused) ? '❚❚' : '▶';
-  $('#playBtn').disabled = !cur || cur.r === 'blocked';
+  $('#playBtn').disabled = !cur;
 }
 
 function card(s){
   const live = cur && cur.id === s.id && !au.paused;
-  return '<button class="st' + (s.r === 'blocked' ? ' off' : '') + '" data-id="' + s.id + '" data-live="' + (live ? 1 : 0) + '">' +
+  return '<button class="st" data-id="' + s.id + '" data-live="' + (live ? 1 : 0) + '">' +
     '<span class="eq"><i></i><i></i><i></i></span>' +
     '<button class="fav" aria-pressed="' + favs.includes(s.id) + '">★</button>' +
     '<span class="brand">' + esc(s.brand) + '</span>' +
