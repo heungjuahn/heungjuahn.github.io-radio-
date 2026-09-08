@@ -1,0 +1,52 @@
+name: MBC 라디오 토큰 갱신
+
+on:
+  schedule:
+    # 10분마다 점검한다. 기존 토큰이 아직 살아 있으면 아무것도 쓰지 않으므로,
+    # 실제 커밋은 토큰이 만료됐을 때만 생긴다. (토큰 수명에 맞춰 자동으로 조절되는 셈)
+    - cron: '*/10 * * * *'
+  workflow_dispatch:        # Actions 탭에서 수동 실행용
+
+permissions:
+  contents: write           # mbc.json 커밋
+  pages: write              # Pages 재배포 요청
+
+concurrency:
+  group: mbc-token
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 토큰 점검 및 갱신
+        run: python3 .github/scripts/refresh_mbc.py
+
+      - name: 변경된 경우에만 커밋
+        id: commit
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain mbc.json)" ]; then
+            echo "변경 없음 — 커밋하지 않습니다."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mbc.json
+          git commit -m "MBC 스트림 토큰 갱신"
+          git push
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # GITHUB_TOKEN 으로 푸시하면 다른 워크플로가 자동 실행되지 않습니다.
+      # Pages 빌드가 안 걸릴 수 있으므로 명시적으로 재배포를 요청합니다.
+      # (Pages 소스가 브랜치가 아닌 경우 이 API 는 실패할 수 있어 무시합니다.)
+      - name: Pages 재배포 요청
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST "repos/${{ github.repository }}/pages/builds" \
+            || echo "Pages 빌드 요청 실패 — 푸시만으로 배포되는 설정일 수 있습니다."
