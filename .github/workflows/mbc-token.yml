@@ -5,6 +5,13 @@ on:
     # 10분마다 점검한다. 기존 토큰이 아직 살아 있으면 아무것도 쓰지 않으므로,
     # 실제 커밋은 토큰이 만료됐을 때만 생긴다. (토큰 수명에 맞춰 자동으로 조절되는 셈)
     - cron: '*/10 * * * *'
+  push:
+    # 이 파일을 커밋하는 순간 곧바로 한 번 돌아간다.
+    # → Actions 탭에서 버튼을 찾을 필요 없이 mbc.json 이 만들어진다.
+    branches: [main]
+    paths:
+      - '.github/workflows/mbc-token.yml'
+      - '.github/scripts/refresh_mbc.py'
   workflow_dispatch:        # Actions 탭에서 수동 실행용
 
 permissions:
